@@ -262,9 +262,11 @@ class IntByte:
 
     def decode(self,data):
         print("decode IntByte")
-        print(data)
-        self.val= unpack(">b",data[:1])[0]
-        return data[1:]
+        if data != b'':
+            self.val= unpack(">b",data[:1])[0]
+            return data[1:]
+        else:
+            return ""
 
     def __len__(self):
         return 1
