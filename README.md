@@ -3,6 +3,11 @@
 aioblescan is a Python 3/asyncio library to listen for BLE advertized packets.
 
 
+# Fork
+
+Forked to support changing TLM content by mik4el.
+
+
 # Installation
 
 We are on PyPi so
@@ -149,3 +154,5 @@ What can you track?
     aioblescan will try to parse all the incoming advertised information. You can see
     the raw data when it does not know what to do. With Eddystone beacon you can see the
     URL, Telemetry and UID
+
+

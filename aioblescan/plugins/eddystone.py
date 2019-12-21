@@ -70,6 +70,11 @@ class EddyStone(object):
 
     def __init__(self, type=ESType.url, param="https://goo.gl/m9UiEA"):
         self.power = 0
+        self.temp = 0
+        self.voltage = 0
+        self.count = 0
+        self.uptime = 0
+
         self.payload = []     #As defined in https://github.com/google/eddystone/blob/master/protocol-specification.md
         self.payload.append(aios.Byte("Flag Length",b'\x02'))
         self.payload.append(aios.Byte("Flag Data Type",b'\x01'))
@@ -163,30 +168,31 @@ class EddyStone(object):
         self.service_data_length.val = 23 #Update the payload length/ways the same for uid
         return encodedurl
 
+
     def tlm_encoder(self):
         encodedurl = []
         encodedurl.append(aios.NBytes("VBATT",2))
-        if "battery" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["battery"]
+        if self.battery != 0:
+            encodedurl[-1].val = self.battery
         else:
             encodedurl[-1].val = -128
         encodedurl.append(aios.Float88("Temperature"))
-        if "temperature" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["temperature"]
+        if self.temp != 0:
+            encodedurl[-1].val = self.temp
         else:
             encodedurl[-1].val = -128
-
         encodedurl.append(aios.ULongInt("Count"))
-        if "count" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["count"]
+        if self.count != 0:
+            encodedurl[-1].val = self.count
         else:
             encodedurl[-1].val = 0
-
         encodedurl.append(aios.ULongInt("Uptime"))
-        if "uptime" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["uptime"]
+        if self.uptime != 0:
+            encodedurl[-1].val = self.uptime
         else:
             encodedurl[-1].val = 0
+        print("TLM encoded:")
+        print(encodedurl)
         return encodedurl
 
 

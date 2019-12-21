@@ -56,6 +56,14 @@ parser.add_argument("-u","--url", type= str, default="",
                     help="When broadcasting like an EddyStone Beacon, set the url.")
 parser.add_argument("-t","--txpower", type= int, default=0,
                     help="When broadcasting like an EddyStone Beacon, set the Tx power")
+parser.add_argument("-T","--temp", type= int, default=0,
+                    help="When broadcasting like an EddyStone Beacon, set the temperature")
+parser.add_argument("-V","--voltage", type= int, default=0,
+                    help="When broadcasting like an EddyStone Beacon, set the battery voltage")
+parser.add_argument("-C","--count", type= int, default=0,
+                    help="When broadcasting like an EddyStone Beacon, set the count")
+parser.add_argument("-U","--uptime", type= int, default=0,
+                    help="When broadcasting like an EddyStone Beacon, set the uptime")
 parser.add_argument("-D","--device", type=int, default=0,
                     help="Select the hciX device to use (default 0, i.e. hci0).")
 try:
@@ -115,12 +123,27 @@ if opts.advertise:
     btctrl.send_command(command)
     command = aiobs.HCI_Cmd_LE_Set_Advertised_Params(interval_min=opts.advertise,interval_max=opts.advertise)
     btctrl.send_command(command)
-    if opts.url:
-        myeddy = EddyStone(param=opts.url)
+    if opts.temp or opts.voltage or opts.count or opts.uptime:
+        # This is a TLM package 
+        if opts.url:
+            myeddy = EddyStone(type=ESType.tlm, param=opts.url)
+        else:
+            myeddy = EddyStone(type=ESType.tlm)
     else:
-        myeddy = EddyStone()
+        if opts.url:
+            myeddy = EddyStone(type=ESType.url, param=opts.url)
+        else:
+            myeddy = EddyStone(type=ESType.url)
     if opts.txpower:
         myeddy.power=opts.txpower
+    if opts.temp:
+        myeddy.temp=opts.temp
+    if opts.voltage:
+        myeddy.voltage=opts.voltage
+    if opts.count:
+        myeddy.count=opts.count
+    if opts.uptime:
+        myeddy.uptime=opts.uptime
     command = aiobs.HCI_Cmd_LE_Set_Advertised_Msg(msg=myeddy)
     btctrl.send_command(command)
     command = aiobs.HCI_Cmd_LE_Advertise(enable=True)
