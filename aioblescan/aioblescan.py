@@ -261,12 +261,8 @@ class IntByte:
         return val
 
     def decode(self,data):
-        print("decode IntByte")
-        if data != b'':
-            self.val= unpack(">b",data[:1])[0]
-            return data[1:]
-        else:
-            return ""
+        self.val= unpack(">b",data[:1])[0]
+        return data[1:]
 
     def __len__(self):
         return 1
@@ -575,7 +571,7 @@ class NBytes:
         self.val=b""
 
     def encode(self):
-        val=pack(">%ds"%self.length,self.val)
+        val=pack(">%ds"%len(self.length),self.val)
         return val
 
     def decode(self,data):
