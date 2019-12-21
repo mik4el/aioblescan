@@ -242,6 +242,7 @@ class EddyStone(object):
             espayload = self.eid_encoder()
         encmsg=b''
         for x in self.payload+espayload:
+            print(x)
             encmsg += x.encode()
         mylen=aios.IntByte("Length",len(encmsg))
         encmsg = mylen.encode()+encmsg
