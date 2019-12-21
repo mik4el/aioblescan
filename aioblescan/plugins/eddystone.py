@@ -244,8 +244,6 @@ class EddyStone(object):
 
         found=False
         adv=packet.retrieve("Advertised Data")
-        print("Packet: ")
-        print(adv)
         
         for x in adv:
             luuid=x.retrieve("Service Data uuid")
@@ -269,6 +267,10 @@ class EddyStone(object):
         #Now decode
         result={}
         data=top.val
+        
+        print("Packet: ")
+        print(data)
+        
         etype = aios.EnumByte("type",self.type.val,{ESType.uid.value:"Eddystone-UID",
                                                 ESType.url.value:"Eddystone-URL",
                                                 ESType.tlm.value:"Eddystone-TLM",
