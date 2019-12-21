@@ -171,6 +171,7 @@ class EddyStone(object):
 
     def tlm_encoder(self):
         encodedurl = []
+        encodedurl.append(aios.IntByte("version",1))
         encodedurl.append(aios.NBytes("VBATT",2))
         if self.voltage != 0:
             encodedurl[-1].val = self.voltage.to_bytes(2, byteorder="big")
