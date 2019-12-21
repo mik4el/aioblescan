@@ -571,7 +571,7 @@ class NBytes:
         self.val=b""
 
     def encode(self):
-        val=pack(">%ds"%len(self.length),self.val)
+        val=pack(">%ds"%self.length,self.val)
         return val
 
     def decode(self,data):

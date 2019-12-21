@@ -171,12 +171,11 @@ class EddyStone(object):
 
     def tlm_encoder(self):
         encodedurl = []
-        '''
         encodedurl.append(aios.NBytes("VBATT",2))
         if self.voltage != 0:
-            encodedurl[-1].val = self.voltage
+            encodedurl[-1].val = self.voltage.to_bytes(2, byteorder="big")
         else:
-            encodedurl[-1].val = -128
+            encodedurl[-1].val = b"\x00\x00"
         encodedurl.append(aios.Float88("Temperature"))
         if self.temp != 0:
             encodedurl[-1].val = self.temp
@@ -190,29 +189,6 @@ class EddyStone(object):
         encodedurl.append(aios.ULongInt("Uptime"))
         if self.uptime != 0:
             encodedurl[-1].val = self.uptime
-        else:
-            encodedurl[-1].val = 0
-        '''
-        encodedurl.append(aios.NBytes("VBATT",2))
-        if "battery" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["battery"]
-        else:
-            encodedurl[-1].val = b'0x00'
-        encodedurl.append(aios.Float88("Temperature"))
-        if "temperature" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["temperature"]
-        else:
-            encodedurl[-1].val = -128
-
-        encodedurl.append(aios.ULongInt("Count"))
-        if "count" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["count"]
-        else:
-            encodedurl[-1].val = 0
-
-        encodedurl.append(aios.ULongInt("Uptime"))
-        if "uptime" in self.type_payload:
-            encodedurl[-1].val = self.type_payload["uptime"]
         else:
             encodedurl[-1].val = 0
         print("TLM encoded:")
