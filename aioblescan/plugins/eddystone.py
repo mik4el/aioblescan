@@ -197,7 +197,7 @@ class EddyStone(object):
         if "battery" in self.type_payload:
             encodedurl[-1].val = self.type_payload["battery"]
         else:
-            encodedurl[-1].val = -128
+            encodedurl[-1].val = b'0x00'
         encodedurl.append(aios.Float88("Temperature"))
         if "temperature" in self.type_payload:
             encodedurl[-1].val = self.type_payload["temperature"]
