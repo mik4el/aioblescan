@@ -185,12 +185,12 @@ class EddyStone(object):
         if self.count != 0:
             encodedurl[-1].val = self.count
         else:
-            encodedurl[-1].val = b"\x00\x00"
+            encodedurl[-1].val = 0
         encodedurl.append(aios.ULongInt("Uptime"))
         if self.uptime != 0:
             encodedurl[-1].val = self.uptime
         else:
-            encodedurl[-1].val = b"\x00\x00"
+            encodedurl[-1].val = 0
         print("TLM encoded:")
         print(encodedurl)
         return encodedurl
