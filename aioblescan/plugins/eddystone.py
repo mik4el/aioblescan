@@ -180,7 +180,7 @@ class EddyStone(object):
         if self.temp != 0:
             encodedurl[-1].val = self.temp
         else:
-            encodedurl[-1].val = b"\x00\x00"
+            encodedurl[-1].val = 0.0
         encodedurl.append(aios.ULongInt("Count"))
         if self.count != 0:
             encodedurl[-1].val = self.count
