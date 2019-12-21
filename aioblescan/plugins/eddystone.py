@@ -234,8 +234,6 @@ class EddyStone(object):
         Return None, it is not an Eddystone Beacon advertising packet"""
 
         ssu=packet.retrieve("Complete uuids")
-        print("Packet: ")
-        print(packet)
         found=False
         for x in ssu:
             if EDDY_UUID in x:
@@ -246,6 +244,9 @@ class EddyStone(object):
 
         found=False
         adv=packet.retrieve("Advertised Data")
+        print("Packet: ")
+        print(adv)
+        
         for x in adv:
             luuid=x.retrieve("Service Data uuid")
             for uuid in luuid:
