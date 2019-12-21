@@ -172,8 +172,8 @@ class EddyStone(object):
     def tlm_encoder(self):
         encodedurl = []
         encodedurl.append(aios.NBytes("VBATT",2))
-        if self.battery != 0:
-            encodedurl[-1].val = self.battery
+        if self.voltage != 0:
+            encodedurl[-1].val = self.voltage
         else:
             encodedurl[-1].val = -128
         encodedurl.append(aios.Float88("Temperature"))
