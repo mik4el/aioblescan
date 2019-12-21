@@ -171,6 +171,7 @@ class EddyStone(object):
 
     def tlm_encoder(self):
         encodedurl = []
+        '''
         encodedurl.append(aios.NBytes("VBATT",2))
         if self.voltage != 0:
             encodedurl[-1].val = self.voltage
@@ -191,10 +192,33 @@ class EddyStone(object):
             encodedurl[-1].val = self.uptime
         else:
             encodedurl[-1].val = 0
+        '''
+        encodedurl.append(aios.NBytes("VBATT",2))
+        if "battery" in self.type_payload:
+            encodedurl[-1].val = self.type_payload["battery"]
+        else:
+            encodedurl[-1].val = -128
+        encodedurl.append(aios.Float88("Temperature"))
+        if "temperature" in self.type_payload:
+            encodedurl[-1].val = self.type_payload["temperature"]
+        else:
+            encodedurl[-1].val = -128
+
+        encodedurl.append(aios.ULongInt("Count"))
+        if "count" in self.type_payload:
+            encodedurl[-1].val = self.type_payload["count"]
+        else:
+            encodedurl[-1].val = 0
+
+        encodedurl.append(aios.ULongInt("Uptime"))
+        if "uptime" in self.type_payload:
+            encodedurl[-1].val = self.type_payload["uptime"]
+        else:
+            encodedurl[-1].val = 0
         print("TLM encoded:")
         print(encodedurl)
         return encodedurl
-
+        
 
     def eid_encoder(self):
         encodedurl = []
@@ -213,6 +237,7 @@ class EddyStone(object):
             espayload = self.url_encoder()
         elif self.type.val == ESType.tlm.value:
             espayload = self.tlm_encoder()
+            print(espayload)
         elif self.type.val == ESType.eid.value:
             espayload = self.eid_encoder()
         encmsg=b''
