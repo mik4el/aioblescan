@@ -261,6 +261,8 @@ class IntByte:
         return val
 
     def decode(self,data):
+        print("decode IntByte")
+        print(data)
         self.val= unpack(">b",data[:1])[0]
         return data[1:]
 
