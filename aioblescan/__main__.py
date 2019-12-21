@@ -26,7 +26,7 @@ import asyncio
 import argparse
 import re
 import aioblescan as aiobs
-from aioblescan.plugins import EddyStone
+from aioblescan.plugins import EddyStone, ESType
 from aioblescan.plugins import RuuviWeather
 from aioblescan.plugins import BlueMaestro
 
